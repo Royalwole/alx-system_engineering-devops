@@ -1,0 +1,38 @@
+0. Simple web stack
+
+A user types www.foobar.com into their web browser and hits enter.
+
+The domain name foobar.com is looked up in the global Domain Name System (DNS) and resolves to the server IP 8.8.8.8.
+The user's request is sent to the server at IP 8.8.8.8.
+The Nginx web server running on the server receives the request.
+Nginx passes the request to the application server (e.g. Apache, Tomcat, etc.) where the application code is executed.
+The application server processes the request and generates a response.
+If the response requires data from the database, the application server sends a query to the MySQL database server and waits for a response.
+MySQL processes the query and sends the requested data back to the application server.
+The application server generates a response using the data and sends it back to Nginx.
+Nginx returns the response to the user's web browser.
+
+Now let's go over the roles of each component in this infrastructure:
+
+A SERVER
+A server is a physical or virtual computer that provides resources and services to other computers (clients) over a network, such as the Internet.
+DOMAIN NAME
+The role of the domain name is to provide a human-readable name that maps to the server's IP ADDRESS
+. This allows users to access websites using easy-to-remember names instead of numeric IP addresses.
+TYPE OF RECORD WWW IS IN www.foobar.com?
+The www in www.foobar.com is a DNS record that specifies the subdomain for the website. It stands for "world wide web" and is a convention that has been widely adopted for web-based services.
+WEBSERVER
+The role of the web server (Nginx in this case) is to serve static content (e.g. HTML, CSS, JavaScript files) and forward dynamic requests to the application server for processing.
+APPLICATION SERVER
+The role of the application server is to execute the application code, generate dynamic content (e.g. web pages, API responses), and interact with the database server as needed.
+DATABASE
+The role of the database (MySQL in this case) is to store and manage data in a structured format that can be easily queried and retrieved by the application server.
+HTTP
+The server uses the Hypertext Transfer Protocol (HTTP) to communicate with the user's computer, specifically the HTTP request-response cycle.
+
+Now let's discuss the issues with this infrastructure:
+The infrastructure has a single point of failure (SPOF), which means that if the server fails or goes offline for any reason, the website will become inaccessible. To mitigate this, redundant infrastructure (e.g. load balancers, multiple servers in different geographic locations) can be used to provide high availability and fault tolerance.
+
+When maintenance is needed (e.g. deploying new code, updating system packages), the web server needs to be restarted, which can cause downtime for the website. To minimize downtime, maintenance should be scheduled during off-peak hours, and redundant infrastructure can be used to ensure uninterrupted service.
+The infrastructure cannot scale to handle large amounts of incoming traffic. To accommodate growth, additional servers can be added to a load balancer pool or a cloud-based platform that provides auto-scaling capabilities can be used.
+

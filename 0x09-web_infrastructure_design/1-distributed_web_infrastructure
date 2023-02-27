@@ -1,0 +1,29 @@
+1. A user types www.foobar.com into their web browser and hits enter.
+2. The domain name foobar.com is looked up in the global Domain Name System (DNS) and resolves to the IP address of the load balancer.
+3. The user's request is sent to the load balancer, which is configured with HAProxy to distribute traffic to the two application servers behind it.
+4. HAProxy uses a round-robin distribution algorithm to evenly distribute traffic between the two application servers.
+5. The first application server receives the request and processes it, generating a response that is returned to the load balancer.
+6. The load balancer sends the response back to the user's web browser.
+7. If the response requires data from the database, the application server sends a query to the MySQL database server.
+8. The database server is configured with a Primary-Replica (Master-Slave) cluster, where the Primary node is the main database server and the Replica node is a backup server that replicates the data from the Primary node in real-time.
+9. The Primary node receives the query from the application server and processes it, returning the requested data to the application server.
+10. The application server generates a response using the data and sends it back to the load balancer.
+11. The load balancer sends the response back to the user's web browser.
+
+The roles of each component in this infrastructure:
+
+* The two additional servers are used to provide redundancy and fault tolerance. If one of the servers fails or becomes unavailable, the other server can take over the workload to prevent downtime and ensure high availability.
+* The load balancer (HAProxy in this case) is used to distribute incoming traffic across the two application servers. This helps to ensure that no single server is overloaded and that users receive a fast and reliable service.
+* The application server is responsible for executing the application code and generating dynamic content for the website.
+* The database server (MySQL in this case) is used to store and manage data in a structured format that can be easily queried and retrieved by the application server.
+
+Regarding the specifics of the infrastructure:
+
+* The load balancer is configured with a round-robin distribution algorithm, which evenly distributes traffic between the two application servers. This means that each server will receive an equal share of the workload, and no server will be overloaded with traffic.
+* The load balancer is configured to enable an Active-Active setup, which means that both application servers are actively processing requests at the same time. In contrast, an Active-Passive setup would involve one server actively processing requests, while the other server remains idle until the active server fails or becomes unavailable.
+* The Primary-Replica (Master-Slave) database cluster works by replicating data from the Primary node to the Replica node in real-time. This means that any changes made to the Primary node are immediately propagated to the Replica node, ensuring that the data is always up-to-date and consistent across both nodes.
+* The Primary node is the main database server that receives write queries and processes them. The Replica node is a backup server that only receives read queries, and replicates the data from the Primary node to ensure data consistency. In regard to the application, both nodes are treated as a single logical database, and the application can read and write to either node without any specific configuration.
+
+The infrastructure:
+The infrastructure has no firewall or HTTPS configuration, which could potentially leave it vulnerable to security threats. To mitigate this, a firewall should be set up to block unauthorized access to the servers, and HTTPS should be configured to encrypt data in transit.
+

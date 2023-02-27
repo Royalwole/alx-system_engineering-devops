@@ -1,0 +1,15 @@
+* 3 firewalls: These are network security devices that monitor and control incoming and outgoing network traffic. They can help protect against various types of attacks, such as DDoS attacks, malware, and unauthorized access. We are adding three firewalls for redundancy and to ensure that if one fails, the others will still provide protection.
+* SSL certificate: This certificate will allow us to serve the website over HTTPS, which encrypts the traffic between the user's browser and our servers. This will help protect against eavesdropping, data tampering, and other types of attacks that can occur when data is transmitted over the internet in plain text.
+* 3 monitoring clients: These clients will collect data about our servers, applications, and network, and send it to a monitoring service like Sumologic. This will allow us to keep track of the performance, availability, and security of our infrastructure and detect any issues before they become critical.
+
+The distribution algorithm for the load balancer is round-robin, which means that incoming traffic will be evenly distributed among the servers in a cyclic manner. This will help ensure that no server is overloaded and that requests are handled in a timely manner.
+We are using an Active-Active setup for the load balancer, which means that both load balancers are actively serving traffic at all times. This provides redundancy and helps ensure that if one load balancer fails, the other can take over without interrupting service.
+The database is set up as a Primary-Replica (Master-Slave) cluster, where the Primary node is the one that can accept writes and the Replica nodes are read-only copies of the data. Any writes made to the Primary node are replicated to the Replica nodes. This setup provides fault tolerance, as if the Primary node fails, one of the Replica nodes can take over as the new Primary.
+To monitor web server QPS, we can set up a monitoring tool to track the number of requests per second to the web server. This will allow us to identify any spikes or drops in traffic and investigate the cause.
+
+The issues with this infrastructure include:
+
+* Terminating SSL at the load balancer level can be an issue because it requires decrypting and re-encrypting the traffic, which can add latency and increase the load on the load balancer. It also means that the traffic between the load balancer and the servers is transmitted in plain text.
+* Having only one MySQL server capable of accepting writes can be a single point of failure. If this server fails, we may not be able to write to the database until it is restored.
+* Having servers with all the same components (database, web server, and application server) might be a problem because if there is a vulnerability in one component, all servers are affected. It is important to regularly update and patch all components to minimize the risk of attacks.
+

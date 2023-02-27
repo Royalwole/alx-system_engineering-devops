@@ -1,8 +1,13 @@
-Definitions and Explanations.
-1. For every additional element, why are adding it; we have added one server and one
-load balancer. Adding the new server has allowed us to separate each component (web
-server; Nginx, Application server; code base and Database; MySQL) in there own server
-and yet having one extra server with all the components to serve as a backup if any of
-the components or server fails. Each server is being monitored and has a firewall. We
-have also added an extra load balancer that will assist in handling more traffic across the
-whole infrastructure
+In this infrastructure, we have four servers - one server each for the web server, application server, database server, and load balancer (configured as a cluster with the other one).
+
+The web server is responsible for serving static content like HTML, CSS, and JavaScript files. It receives HTTP requests from clients and responds with the appropriate content.
+
+The application server is responsible for processing dynamic requests and generating responses based on application logic. It may communicate with the database server to retrieve or store data.
+
+The database server stores data that is accessed and manipulated by the application server.
+
+The load balancer is responsible for distributing incoming requests across multiple servers in the web server and application server clusters. This helps improve the performance and reliability of the infrastructure.
+
+We have two load balancers configured as a cluster to provide high availability and failover in case one of the load balancers fails. This ensures that the infrastructure remains available even in the event of a hardware or software failure.
+
+In summary, this infrastructure is designed for scalability, high availability, and performance. By separating the components into their own servers and using a load balancer to distribute traffic, we can handle more requests, ensure that the infrastructure remains available, and improve response times for users.
